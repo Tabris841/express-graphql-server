@@ -4,7 +4,7 @@ const getStudent = (_, { id }) => Student.findById(id).exec();
 
 const allStudents = () => Student.find({});
 
-const createStudent = (_, { input }) => Student.create(input).exec();
+const createStudent = (_, { input }) => Student.create(input);
 
 const updateStudent = (_, { input }) => {
   const { id, ...update } = input;

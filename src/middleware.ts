@@ -1,4 +1,4 @@
-import bodyParser from 'body-parser';
+import * as bodyParser from 'body-parser';
 
 const setGlobalMiddleware = app => {
   app.use(bodyParser.urlencoded({ extended: true }));

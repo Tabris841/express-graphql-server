@@ -1,4 +1,4 @@
-import express from 'express';
+import * as express from 'express';
 import { graphiqlExpress } from 'apollo-server-express';
 
 import setupMiddleware from './middleware';

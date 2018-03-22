@@ -4,7 +4,7 @@ const getCourse = (_, { id }) => Course.findById(id).exec();
 
 const allCourses = () => Course.find({});
 
-const createCourse = (_, { input }) => Course.create(input).exec();
+const createCourse = (_, { input }) => Course.create(input);
 
 const updateCourse = (_, { input }) => {
   const { id, ...update } = input;

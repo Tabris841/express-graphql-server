@@ -1,4 +1,4 @@
-import merge from 'lodash.merge';
+import { merge } from 'lodash';
 
 const env = process.env.NODE_ENV;
 
@@ -24,6 +24,7 @@ switch (env) {
   case 'prod':
   case 'production':
     envConfig = require('./prod').config;
+    break;
   default:
     envConfig = require('./dev').config;
 }
