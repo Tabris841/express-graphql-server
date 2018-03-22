@@ -1,0 +1,30 @@
+type Course {
+    id: ID
+    name: String
+    description: String
+    level: String
+}
+
+input CreateCourse {
+    name: String!
+    description: String
+    level: String
+}
+
+input UpdateCourse {
+    id: ID!
+    name: String!
+    description: String
+    level: String
+}
+
+type Query {
+    Course(id: ID!): Course!
+    allCourses: [Course]
+}
+
+type Mutation {
+    createCourse(input: CreateCourse!): Course!
+    updateCourse(input: UpdateCourse!): Course!
+    deleteCourse(id: ID!): Course!
+}
