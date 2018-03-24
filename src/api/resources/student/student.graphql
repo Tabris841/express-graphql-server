@@ -1,5 +1,3 @@
-# import B from "../course/course.graphql";
-
 type Student {
   id: ID
   firstName: String
@@ -30,7 +28,7 @@ extend type Query {
 }
 
 extend type Mutation {
-  createStudent(input: CreateStudent!): Student!
-  updateStudent(input: UpdateStudent!): Student!
+  createStudent(input: CreateStudent): Student!
+  updateStudent(input: UpdateStudent): Student!
   deleteStudent(id: ID!): Student!
 }
