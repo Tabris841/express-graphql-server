@@ -19,12 +19,12 @@ input UpdateCourse {
 }
 
 type Query {
-  Course(id: ID!): Course!
+  Course(id: ID!): Course
   allCourses: [Course]
 }
 
 type Mutation {
-  createCourse(input: CreateCourse): Course!
-  updateCourse(input: UpdateCourse): Course!
+  createCourse(input: CreateCourse!): Course!
+  updateCourse(input: UpdateCourse!): Course!
   deleteCourse(id: ID!): Course!
 }

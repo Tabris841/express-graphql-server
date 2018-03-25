@@ -3,11 +3,10 @@ type Student {
   firstName: String
   lastName: String
   active: String
-  coursesIds: [Course]
+  courses: [Course]
 }
 
 input CreateStudent {
-  id: ID!
   firstName: String!
   lastName: String!
   active: String!
@@ -16,19 +15,19 @@ input CreateStudent {
 
 input UpdateStudent {
   id: ID!
-  firstName: String!
-  lastName: String!
-  active: String!
+  firstName: String
+  lastName: String
+  active: String
   coursesIds: [ID]
 }
 
-extend type Query {
-  Student(id: ID!): Student!
+type Query {
+  Student(id: ID!): Student
   allStudents: [Student]
 }
 
-extend type Mutation {
-  createStudent(input: CreateStudent): Student!
-  updateStudent(input: UpdateStudent): Student!
+type Mutation {
+  createStudent(input: CreateStudent!): Student!
+  updateStudent(input: UpdateStudent!): Student!
   deleteStudent(id: ID!): Student!
 }

@@ -1,6 +1,26 @@
-type User implements Node {
+type User {
   id: ID!
-  email: String!
-  password: String!
+  username: String!
   name: String!
+}
+
+input CreateUser {
+  username: String!
+  password: String!
+}
+
+input UpdateUser {
+  id: ID!
+  username: String!
+}
+
+type Query {
+  User(id: ID!): User
+  allUsers: [User]
+}
+
+type Mutation {
+  createUser(input: CreateUser!): User!
+  updateUser(input: UpdateUser!): User!
+  deleteUser(id: ID!): User!
 }
