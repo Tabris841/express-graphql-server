@@ -6,9 +6,12 @@ const { CheckerPlugin } = require('awesome-typescript-loader');
 
 module.exports = {
   entry: ['webpack/hot/poll?1000', './src/index'],
+  // entry: ['./src/index.ts'],
+  output: { path: path.join(__dirname, 'dist'), filename: 'server.js' },
   watch: true,
   devtool: 'source-map',
   target: 'node',
+  mode: 'development',
   externals: [
     nodeExternals({
       whitelist: ['webpack/hot/poll?1000']
@@ -25,7 +28,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        loader: 'awesome-typescript-loader',
+        loader: 'ts-loader',
         exclude: /node_modules/
       },
       {
@@ -48,7 +51,10 @@ module.exports = {
       raw: true,
       entryOnly: false
     }),
+    new webpack.LoaderOptionsPlugin({
+      devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+      devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
+    }),
     new CheckerPlugin()
-  ],
-  output: { path: path.join(__dirname, 'dist'), filename: 'server.js' }
+  ]
 };

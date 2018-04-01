@@ -1,0 +1,42 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch TypeScript",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/src/index.ts",
+      "outFiles": ["${workspaceRoot}/dist/index.js"],
+      "sourceMaps": true,
+      "smartStep": true,
+      "runtimeExecutable": "nodemon",
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    }
+    // {
+    //   "name": "Launch Chrome against localhost, with sourcemaps",
+    //   "type": "chrome",
+    //   "request": "launch",
+    //   "url": "http://localhost:4200/",
+    //   "sourceMaps": true,
+    //   "webRoot": "${workspaceRoot}",
+    //   "sourceMapPathOverrides": {
+    //     "webpack:///*": "/*"
+    //   }
+    // },
+    // {
+    //   "name": "Attach to Chrome, with sourcemaps",
+    //   "type": "chrome",
+    //   "request": "attach",
+    //   "port": 9222,
+    //   "sourceMaps": true,
+    //   /*"diagnosticLogging": true,*/
+    //   "webRoot": "${workspaceRoot}",
+    //   "url": "http://localhost:4200/*",
+    //   "sourceMapPathOverrides": {
+    //     "webpack:///*": "/*"
+    //   }
+    // }
+  ]
+}
