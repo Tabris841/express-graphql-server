@@ -4,7 +4,10 @@ const env = process.env.NODE_ENV;
 
 const baseConfig = {
   port: 3000,
-  secrets: {},
+  expireTime: '30d',
+  secrets: {
+    JWT_SECRET: 'yeezy350boost'
+  },
   db: {
     url: 'mongodb://localhost/graphql'
   }

@@ -6,7 +6,7 @@ type Student {
   courses: [Course]
 }
 
-input NewStudent {
+input CreateStudent {
   firstName: String!
   lastName: String!
   active: String!
@@ -15,19 +15,19 @@ input NewStudent {
 
 input UpdateStudent {
   id: ID!
-  firstName: String!
-  lastName: String!
-  active: String!
+  firstName: String
+  lastName: String
+  active: String
   courses: [ID]
 }
 
-extend type Query {
-  Student(id: ID!): Student!
+type Query {
+  Student(id: ID!): Student
   allStudents: [Student]
 }
 
-extend type Mutation {
-  createStudent(input: NewStudent!): Student!
+type Mutation {
+  createStudent(input: CreateStudent!): Student!
   updateStudent(input: UpdateStudent!): Student!
   deleteStudent(id: ID!): Student!
 }

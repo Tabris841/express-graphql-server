@@ -19,7 +19,7 @@ input UpdateCourse {
 }
 
 type Query {
-  Course(id: ID!): Course!
+  Course(id: ID!): Course
   allCourses: [Course]
 }
 

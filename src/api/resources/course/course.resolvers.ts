@@ -1,18 +1,19 @@
 import { Course } from './course.model';
 
-const getCourse = (_, { id }) => Course.findById(id).exec();
+const getCourse = async (_, { id }) => await Course.findById(id).exec();
 
-const allCourses = () => Course.find({});
+const allCourses = async () => await Course.find({}).exec();
 
-const createCourse = (_, { input }) => Course.create(input);
+const createCourse = async (_, { input }) => await Course.create(input);
 
-const updateCourse = (_, { input }) => {
+const updateCourse = async (_, { input }) => {
   const { id, ...update } = input;
 
-  return Course.findByIdAndUpdate(id, update, { new: true }).exec();
+  return await Course.findByIdAndUpdate(id, update, { new: true }).exec();
 };
 
-const deleteCourse = (_, { id }) => Course.findByIdAndRemove({ _id: id });
+const deleteCourse = async (_, { id }) =>
+  await Course.findByIdAndRemove({ _id: id }).exec();
 
 export const courseResolvers = {
   Query: {
