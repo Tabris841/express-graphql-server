@@ -33,6 +33,7 @@
     "@types/mongoose": "^5.0.7",
     "@types/node": "^9.6.1",
     "@types/webpack-env": "^1.13.5",
+    "prettier": "^1.11.1",
     "raw-loader": "^0.5.1",
     "start-server-webpack-plugin": "^2.2.5",
     "ts-loader": "^4.1.0",
