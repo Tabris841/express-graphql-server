@@ -1,20 +1,40 @@
 import * as express from 'express';
 import * as cors from 'cors';
+import * as bodyParser from 'body-parser';
+import * as logger from 'morgan';
+import * as mongoose from 'mongoose';
 import { graphiqlExpress } from 'apollo-server-express';
 
-import setupMiddleware from './middleware';
 import { graphQLRouter } from './api';
-import { connect } from './db';
-import { signin, verifyUser } from './api/modules/auth';
+import UserRouter from './api/resources/user/user.controller';
+import appConfig from './config';
 
-const app = express();
+class App {
+  public express: express.Application;
 
-setupMiddleware(app);
-connect();
+  constructor() {
+    this.express = express();
+    this.middleware();
+    this.routes();
+    this.connectToDb();
+  }
 
-app.use('/signin', signin);
-app.use('/login', verifyUser);
-app.use('/graphql', cors(), graphQLRouter);
-app.use('/docs', graphiqlExpress({ endpointURL: '/graphql' }));
+  private middleware(): void {
+    this.express.use(cors());
+    this.express.use(logger('dev'));
+    this.express.use(bodyParser.json());
+    this.express.use(bodyParser.urlencoded({ extended: true }));
+  }
 
-export default app;
+  private routes(): void {
+    this.express.use('/user', new UserRouter().router);
+    this.express.use('/graphql', graphQLRouter);
+    this.express.use('/docs', graphiqlExpress({ endpointURL: '/graphql' }));
+  }
+
+  private connectToDb(config = appConfig): Promise<typeof mongoose> {
+    return mongoose.connect(config.db.url);
+  }
+}
+
+export default new App().express;

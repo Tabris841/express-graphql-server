@@ -6,14 +6,6 @@ import config from '../../config';
 
 const checkToken = expressJwt({ secret: config.secrets.JWT_SECRET });
 
-export const signin = (req, res, next) => {
-  // req.user will be there from the middleware
-  // verify user. Then we can just create a token
-  // and send it back for the client to consume
-  const token = signToken(req.user.id);
-  res.json({ token: token });
-};
-
 export const decodeToken = () => (req, res, next) => {
   // make it optional to place token on query string
   // if it is, place it on the headers where it should be
@@ -66,7 +58,7 @@ export const verifyUser = () => (req, res, next) => {
       if (!user) {
         res.status(401).send('No user with the given username');
       } else {
-        // checking the passowords here
+        // checking the password here
         if (!user.authenticate(password)) {
           res.status(401).send('Wrong password');
         } else {
@@ -82,7 +74,17 @@ export const verifyUser = () => (req, res, next) => {
     .catch(error => next(error));
 };
 
-export const signToken = id =>
-  jwt.sign({ id }, config.secrets.JWT_SECRET, { expiresIn: config.expireTime });
+export const signToken = (id, username) =>
+  jwt.sign({ id, username }, config.secrets.JWT_SECRET, {
+    expiresIn: config.expireTime
+  });
+
+export const signin = (req, res, next) => {
+  // req.user will be there from the middleware
+  // verify user. Then we can just create a token
+  // and send it back for the client to consume
+  const token = signToken(req.user.id, req.user.username);
+  res.json({ token: token });
+};
 
 export const protect = [decodeToken(), getFreshUser()];

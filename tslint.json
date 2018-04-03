@@ -45,7 +45,7 @@
     "radix": true,
     "semicolon": [true, "always"],
     "triple-equals": [true, "allow-null-check"],
-    "typedef": [true, "call-signature", "parameter"],
+    // "typedef": [true, "call-signature", "parameter"],
     "variable-name": false,
     "trailing-comma": [
       true,
