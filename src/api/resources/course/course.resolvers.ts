@@ -1,8 +1,12 @@
 import { Course } from './course.model';
 
-const getCourse = async (_, { id }) => await Course.findById(id).exec();
+const getCourse = async (_, { id }) => {
+  return await Course.findById(id).exec();
+};
 
-const allCourses = async () => await Course.find({}).exec();
+const allCourses = async (root, args, context, info) => {
+  return await Course.find({}).exec();
+};
 
 const createCourse = async (_, { input }) => await Course.create(input);
 
