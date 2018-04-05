@@ -4,9 +4,10 @@ import * as bodyParser from 'body-parser';
 import * as logger from 'morgan';
 import * as mongoose from 'mongoose';
 import { graphiqlExpress } from 'apollo-server-express';
-// import * as session from 'express-session';
-// import * as uuid from 'uuid';
-// import * as passport from 'passport';
+import * as session from 'express-session';
+import * as uuid from 'uuid';
+import * as passport from 'passport';
+import * as expressJwt from 'express-jwt';
 
 import { graphQLRouter } from './api';
 import UserRouter from './api/resources/user/user.controller';
@@ -27,21 +28,28 @@ class App {
   private middleware(): void {
     this.express.use(cors());
     this.express.use(logger('dev'));
-    // this.express.use(
-    //   session({
-    //     genid: req => uuid.v4(),
-    //     secret: 'Z3]GJW!?9uP”/Kpe'
-    //   })
-    // );
-    // this.express.use(passport.initialize());
-    // this.express.use(passport.session());
+    this.express.use(
+      session({
+        genid: req => uuid.v4(),
+        secret: 'Z3]GJW!?9uP”/Kpe'
+      })
+    );
+    this.express.use(passport.initialize());
+    this.express.use(passport.session());
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: true }));
   }
 
   private routes(): void {
     this.express.use('/user', new UserRouter().router);
-    this.express.use('/graphql', graphQLRouter);
+    this.express.use(
+      '/graphql',
+      expressJwt({
+        secret: appConfig.secrets.JWT_SECRET,
+        credentialsRequired: false
+      }),
+      graphQLRouter
+    );
     this.express.use('/docs', graphiqlExpress({ endpointURL: '/graphql' }));
   }
 

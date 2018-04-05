@@ -5,7 +5,7 @@ type Course {
   level: String
 }
 
-input NewCourse {
+input CreateCourse {
   name: String!
   description: String
   level: String
@@ -24,7 +24,7 @@ type Query {
 }
 
 type Mutation {
-  createCourse(input: NewCourse!): Course!
+  createCourse(input: CreateCourse!): Course!
   updateCourse(input: UpdateCourse!): Course!
   deleteCourse(id: ID!): Course!
 }

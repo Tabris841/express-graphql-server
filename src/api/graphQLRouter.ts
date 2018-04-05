@@ -6,7 +6,7 @@ import { fileLoader, mergeTypes } from 'merge-graphql-schemas';
 
 import { courseResolvers } from './resources/course';
 import { studentResolvers } from './resources/student';
-import { userResolvers } from './resources/user';
+import { userResolvers, User } from './resources/user';
 
 const typesArray = fileLoader(path.join(__dirname, 'resources/**/*.graphql'));
 
@@ -15,10 +15,12 @@ const schema = makeExecutableSchema({
   resolvers: merge({}, courseResolvers, studentResolvers, userResolvers)
 });
 
-export const graphQLRouter = graphqlExpress(req => ({
-  schema,
-  context: {
-    req,
-    user: req!.user
-  }
-}));
+export const graphQLRouter = graphqlExpress(async req => {
+  return {
+    schema,
+    context: {
+      req,
+      user: req!.user ? await User.findById(req!.user!.id).exec() : null
+    }
+  };
+});

@@ -1,23 +1,30 @@
+import { combineResolvers } from 'graphql-resolvers';
 import { User } from './user.model';
 
-const getUser = async (_, { id }) => await User.findById(id).exec();
+const getUser = (_, { id }) => User.findById(id).exec();
 
-const allUsers = async () => await User.find({}).exec();
+const allUsers = () => User.find({}).exec();
 
-const createUser = async (_, { input }) => await User.create(input);
+const createUser = (_, { input }) => User.create(input);
 
-const updateUser = async (_, { input }) => {
+const updateUser = (_, { input }) => {
   const { id, ...update } = input;
 
-  return await User.findByIdAndUpdate(id, update, { new: true }).exec();
+  return User.findByIdAndUpdate(id, update, { new: true }).exec();
 };
 
 const deleteUser = async (_, { id }) =>
   await User.findByIdAndRemove({ _id: id });
 
+const isAuthenticated = (root, args, context, info) => {
+  if (!context.user) {
+    return new Error('Not authenticated');
+  }
+};
+
 export const userResolvers = {
   Query: {
-    allUsers,
+    allUsers: combineResolvers(isAuthenticated, allUsers),
     Student: getUser
   },
   Mutation: {
